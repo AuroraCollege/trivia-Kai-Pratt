@@ -9,15 +9,20 @@ from models import Base, Question, User
 
 app = Flask(__name__)
 
-engine = create_engine("sqlite:///questions.sqlite", echo=True) # Create an engine to connect to the database
-Base.metadata.create_all(engine) # Create the tables in the database
-Session = sessionmaker(bind=engine) # Create a session class
-session = Session() # Create a session object
+question_engine = create_engine("sqlite:///questions.sqlite", echo=True) # Create an engine to connect to the database
+Base.metadata.create_all(question_engine) # Create the tables in the database
+Session = sessionmaker(bind=question_engine) # Create a session class
+question_session = Session() # Create a session object
+
+user_engine = create_engine("sqlite:///users.sqlite", echo=True) # Creates an engine to connect to users.db
+Base.metadata.create_all(user_engine)
+Session = sessionmaker(bind=user_engine) # Create a session class
+user_session = Session() # Create a session object
 
 @app.route("/") 
 def index():
     '''Display the questions on the index page'''
-    questions = session.query(Question).all()
+    questions = question_session.query(Question).all()
     return render_template("index.html", questions=questions)
 
 @app.route("/submit", methods=["POST"])
@@ -27,7 +32,7 @@ def submit():
     score = 0
     total_score = 0
     results = []
-    for question in session.query(Question).all():
+    for question in question_session.query(Question).all():
         question_id = question.id
         user_answer = request.form.get(f"{question_id}")
         total_score += 1
@@ -38,8 +43,8 @@ def submit():
             results.append((question.question, "Incorrect!"))
 
     user = User(name=name, score=score)
-    session.add(user)
-    session.commit()
+    user_session.add(user)
+    user_session.commit()
 
     return render_template("results.html", results=results, name=name, score=score, total_score=total_score) 
 
