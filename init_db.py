@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine # Import the create_engine function from the sqlalchemy module
 from sqlalchemy.orm import sessionmaker # Import the sessionmaker function from the sqlalchemy.orm module
-from models import Base, Question # Import the Base and Question classes from the models module
+from models import Base, Question, User # Import the Base and Question classes from the models module
 import os
 
 if not os.path.exists("questions.sqlite"):

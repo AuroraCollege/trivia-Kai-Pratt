@@ -7,6 +7,9 @@
 </head>
 <body>
     <h1>Results</h1>
+        <p>Thanks for playing {{ name }}!</p>
+        <p>You scored {{ score }}/{{ total_score }}</p>
+        
     <ul>
         {% for question, result in results %}
             <li>{{ question }}: {{ result }}</li>

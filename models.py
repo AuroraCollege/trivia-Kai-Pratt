@@ -5,6 +5,13 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base() # Base class for the model
 
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True) # Primary key
+    name = Column(String, nullable=False)
+    score = Column(Integer, nullable=False)
+
+
 class Question(Base): # Model for the questions table
     __tablename__ = 'questions'
     id = Column(Integer, primary_key=True) # Primary key
