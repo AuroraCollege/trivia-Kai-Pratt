@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine # Import the create_engine function from the sqlalchemy module
 from sqlalchemy.orm import sessionmaker # Import the sessionmaker function from the sqlalchemy.orm module
-from models import Base, Question # Import the Base and Question classes from the models module
+from models import Base, Question, User # Import the Base and Question classes from the models module
 import os
 
 if not os.path.exists("questions.sqlite"):
@@ -41,4 +41,10 @@ if not os.path.exists("questions.sqlite"):
     session.commit() # Commit the changes to the database
 
 else:
-    print("Database already exists. Initialization skipped.")
+    print("Questions database already exists. Initialization skipped.")
+
+if not os.path.exists("users.sqlite"):
+    engine = create_engine("sqlite:///users.sqlite", echo=True) # Create an engine that connects to the database file users.sqlite
+    Base.metadata.create_all(engine) # Create the tables in the database
+else:
+    print("Users database already exists. Initialization skipped.")

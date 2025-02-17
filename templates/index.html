@@ -9,6 +9,10 @@
 <body>
     <h1>Trivia Questions</h1>
     <form action="{{ url_for('submit') }}" method="post">
+        <div>
+            <label for="name">Enter your name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
         {% for question in questions %}
             <div>
                 <p>{{ question.question }}</p>
